@@ -20,10 +20,10 @@ chamar quem está bloqueando a saída e se organizar quando o estacionamento lot
 ## O que dá para testar
 
 - **Estacionar e liberar:** você entra como *Camila Ribeiro*, já estacionada no fundo da vaga 210. Libere a vaga e estacione em outra.
-- **Chamar quem está na frente:** na vaga 210, toque em *Chamar Rafael para descer*. Na versão real, isso abre o WhatsApp com a mensagem pronta.
+- **Chamar quem está na frente:** abra a *Garagem 1* e, na vaga 210, toque em *Chamar Rafael para descer*. Na versão real, isso abre o WhatsApp com a mensagem pronta.
 - **"Sem carro?":** em uma vaga ocupada por outra pessoa, avise que ela pode estar vazia ou assuma a vaga.
 - **"Pode estar ocupada":** em uma vaga livre, use o menu **⋮** para avisar que tem um carro sem cadastro.
-- **Lista de espera, ranking e sugestões:** pelos ícones de sino, troféu e lâmpada.
+- **Lista de espera:** no fim do painel. **Ranking** e **sugestões:** pelos ícones de troféu e lâmpada no topo.
 - **Tema claro/escuro:** pelo ícone de sol/lua.
 - **Seu próprio acesso:** toque em *Sair* e entre com qualquer telefone para fazer um cadastro (fica só no seu navegador).
 
