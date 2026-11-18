@@ -326,9 +326,9 @@
 <body data-theme="light">
 <div class="topbar"></div>
 <div class="wrap" id="app"><div class="center"><span class="spin"></span><span>Carregando…</span></div></div>
-<div class="sheet" id="sheet"></div>
-<div class="modal" id="modal"></div>
-<div class="toast" id="toast"></div>
+<div class="sheet" id="sheet" data-cy="sheet"></div>
+<div class="modal" id="modal" data-cy="modal"></div>
+<div class="toast" id="toast" data-cy="toast"></div>
 
 <div class="demoRibbon">Demo · dados fictícios</div>
 <script>
@@ -551,7 +551,7 @@ const ICON={
   more:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>'
 };
 function logoSrc(){return currentTheme==='dark'?LOGO_DARK:LOGO_LIGHT;}
-function themeBtnHTML(extraClass){return `<button class="iconbtn ${extraClass||''}" data-themebtn title="${currentTheme==='dark'?'Modo claro':'Modo escuro'}">${currentTheme==='dark'?ICON.sun:ICON.moon}</button>`;}
+function themeBtnHTML(extraClass){return `<button class="iconbtn ${extraClass||''}" data-themebtn data-cy="tema" title="${currentTheme==='dark'?'Modo claro':'Modo escuro'}">${currentTheme==='dark'?ICON.sun:ICON.moon}</button>`;}
 function bindThemeBtns(){document.querySelectorAll('[data-themebtn]').forEach(b=>b.addEventListener('click',toggleTheme));}
 function applyTheme(t){
   currentTheme=t;
@@ -585,8 +585,8 @@ function renderLogin(prefill=''){
       <h2>Entrar</h2>
       <p class="lead">Digite seu telefone. Se já tiver entrado antes, é só continuar.</p>
       <div class="field"><label for="ph">Seu telefone</label>
-        <input id="ph" inputmode="tel" placeholder="(82) 99999-9999" value="${esc(prefill)}" autocomplete="tel"></div>
-      <button class="btn" id="go">Continuar</button>
+        <input id="ph" data-cy="login-telefone" inputmode="tel" placeholder="(82) 99999-9999" value="${esc(prefill)}" autocomplete="tel"></div>
+      <button class="btn" id="go" data-cy="login-continuar">Continuar</button>
       <p class="hint">Sem senha. Fica salvo no seu celular.</p>
     </div>
     <p class="disc">Aplicativo independente — não é um produto oficial EDGE.</p>
@@ -616,10 +616,10 @@ function renderRegister(d){
     <div class="card">
       <h2>Seu primeiro acesso</h2>
       <p class="lead">Preencha uma vez só. Depois é só o telefone.</p>
-      <div class="field"><label for="nm">Seu nome completo</label><input id="nm" placeholder="Nome e sobrenome" autocomplete="name"></div>
-      <div class="field"><label for="sl">Número da sala</label><input id="sl" inputmode="numeric" placeholder="Ex: 305"></div>
-      <button class="btn" id="save">Entrar</button>
-      <button class="btn ghost" id="back" style="margin-top:10px">Voltar</button>
+      <div class="field"><label for="nm">Seu nome completo</label><input id="nm" data-cy="cadastro-nome" placeholder="Nome e sobrenome" autocomplete="name"></div>
+      <div class="field"><label for="sl">Número da sala</label><input id="sl" data-cy="cadastro-sala" inputmode="numeric" placeholder="Ex: 305"></div>
+      <button class="btn" id="save" data-cy="cadastro-entrar">Entrar</button>
+      <button class="btn ghost" id="back" data-cy="cadastro-voltar" style="margin-top:10px">Voltar</button>
     </div>
     <p class="disc">Aplicativo independente — não é um produto oficial EDGE.</p>
   </div>`;
@@ -702,22 +702,22 @@ function renderDashboard(){
   const st=slotStats();
   app.innerHTML=`<header class="bar">
     <div class="barTop"><img class="hlogo" src="${logoSrc()}" alt="EDGE">
-      <div class="who"><div class="nm">${esc(user.name)}</div>
-      <div class="meta">Sala <b>${esc(user.sala)}</b></div></div>
-      <div class="barBtns"><button class="iconbtn" id="navRank" title="Ranking de uso das vagas">${ICON.trophy}</button><button class="iconbtn" id="navSug" title="Sugestões e melhorias">${ICON.bulb}</button>${themeBtnHTML()}<button class="switch" id="logout">Sair</button></div></div>
+      <div class="who"><div class="nm" data-cy="usuario-nome">${esc(user.name)}</div>
+      <div class="meta" data-cy="usuario-sala">Sala <b>${esc(user.sala)}</b></div></div>
+      <div class="barBtns"><button class="iconbtn" id="navRank" data-cy="nav-ranking" title="Ranking de uso das vagas">${ICON.trophy}</button><button class="iconbtn" id="navSug" data-cy="nav-sugestoes" title="Sugestões e melhorias">${ICON.bulb}</button>${themeBtnHTML()}<button class="switch" id="logout" data-cy="sair">Sair</button></div></div>
     <div class="stats">
       <div class="statGroup">
-        <div class="sgHead">${ICON.car}<span>Carro</span><span class="sgTot" id="st-car-tot">${st.carO}/${st.carT}</span></div>
+        <div class="sgHead">${ICON.car}<span>Carro</span><span class="sgTot" id="st-car-tot" data-cy="carro-total">${st.carO}/${st.carT}</span></div>
         <div class="sgRow">
-          <div class="stat free"><div class="n" id="st-car-free">${st.carF}</div><div class="l">Livres</div></div>
-          <div class="stat occ"><div class="n" id="st-car-occ">${st.carO}</div><div class="l">Ocupadas</div></div>
+          <div class="stat free"><div class="n" id="st-car-free" data-cy="carro-livres">${st.carF}</div><div class="l">Livres</div></div>
+          <div class="stat occ"><div class="n" id="st-car-occ" data-cy="carro-ocupadas">${st.carO}</div><div class="l">Ocupadas</div></div>
         </div>
       </div>
       <div class="statGroup">
-        <div class="sgHead">${ICON.moto}<span>Moto</span><span class="sgTot" id="st-moto-tot">${st.motoO}/${st.motoT}</span></div>
+        <div class="sgHead">${ICON.moto}<span>Moto</span><span class="sgTot" id="st-moto-tot" data-cy="moto-total">${st.motoO}/${st.motoT}</span></div>
         <div class="sgRow">
-          <div class="stat free"><div class="n" id="st-moto-free">${st.motoF}</div><div class="l">Livres</div></div>
-          <div class="stat occ"><div class="n" id="st-moto-occ">${st.motoO}</div><div class="l">Ocupadas</div></div>
+          <div class="stat free"><div class="n" id="st-moto-free" data-cy="moto-livres">${st.motoF}</div><div class="l">Livres</div></div>
+          <div class="stat occ"><div class="n" id="st-moto-occ" data-cy="moto-ocupadas">${st.motoO}</div><div class="l">Ocupadas</div></div>
         </div>
       </div>
     </div></header>
@@ -725,8 +725,8 @@ function renderDashboard(){
       <div id="callBanner"></div>
       <div id="vagas"></div>
       <div class="waitWrap">
-        <div class="waitHead">${ICON.bell}<span>Lista de espera</span><span class="wcount" id="waitCount"></span></div>
-        <div id="waitlist"></div>
+        <div class="waitHead">${ICON.bell}<span>Lista de espera</span><span class="wcount" id="waitCount" data-cy="espera-contagem"></span></div>
+        <div id="waitlist" data-cy="espera-lista"></div>
       </div>
       <p class="footnote">Você escolhe fundo ou frente na vaga. <b>As vagas são liberadas sozinhas todo dia.</b>
       <span class="ind">Aplicativo independente — não é um produto oficial EDGE.</span></p>
@@ -750,13 +750,13 @@ function renderCallBanner(){
   const el=$('#callBanner');if(!el)return;
   const c=state.calls&&state.calls[normPhone(user.phone)];
   if(c){
-    el.innerHTML=`<div class="callNotice">
+    el.innerHTML=`<div class="callNotice" data-cy="chamado">
       <div class="cnic">${ICON.bell}</div>
       <div class="cntxt">
         <div class="cnt1">${esc(c.from)} te chamou para descer</div>
         <div class="cnt2">Sala ${esc(c.sala)} · Vaga ${esc(c.box)} (${esc(c.local)}) — precisa que você mova o carro</div>
       </div>
-      <button class="cnbtn" id="cnDismiss">Já vou</button>
+      <button class="cnbtn" id="cnDismiss" data-cy="chamado-ja-vou">Já vou</button>
     </div>`;
     $('#cnDismiss').addEventListener('click',dismissCall);
   }else el.innerHTML='';
@@ -783,11 +783,11 @@ function openCallSheet(o,box,local){
       <div class="grip"></div>
       <div class="sh-h">Chamar ${esc(o.name)}</div>
       <div class="sh-s">Vaga ${esc(box)} · ${esc(local)} · Sala ${esc(o.sala)}</div>
-      <button class="opt wa" id="optWa"><span class="oic">${ICON.wa}</span>
+      <button class="opt wa" id="optWa" data-cy="opcao-whatsapp"><span class="oic">${ICON.wa}</span>
         <span class="otxt"><span class="ot1">Chamar no WhatsApp</span><span class="ot2">Abre o WhatsApp com a mensagem pronta</span></span></button>
-      <button class="opt cp" id="optCopy"><span class="oic">${ICON.copy}</span>
+      <button class="opt cp" id="optCopy" data-cy="opcao-copiar"><span class="oic">${ICON.copy}</span>
         <span class="otxt"><span class="ot1">Copiar número de celular</span><span class="ot2">${fmtPhone(o.phone)}</span></span></button>
-      <button class="opt cancel" data-close>Cancelar</button>
+      <button class="opt cancel" data-close data-cy="opcao-cancelar">Cancelar</button>
     </div>`;
   sheet.classList.add('show');
   sheet.querySelectorAll('[data-close]').forEach(e=>e.addEventListener('click',closeSheet));
@@ -818,8 +818,8 @@ function floorHtml(floor){
   const full=tot>0&&occ>=tot;
   // mantém a posição fixa do box (mesmo cheio)
   const open=!collapsed[floor];
-  const pill=tot>0?`<span class="focc ${full?'full':'ok'}" title="${full?'lotado':'vagas ocupadas'}">${occ}/${tot}</span>`:'';
-  let h=`<button class="fhead ${open?'open':''}" data-floor="${esc(floor)}">
+  const pill=tot>0?`<span data-cy="andar-ocupacao" class="focc ${full?'full':'ok'}" title="${full?'lotado':'vagas ocupadas'}">${occ}/${tot}</span>`:'';
+  let h=`<button class="fhead ${open?'open':''}" data-cy="andar" data-floor="${esc(floor)}">
       <span class="fdot"></span><h3>${esc(floor)}</h3>
       ${pill}
       <span class="chev">${ICON.arrow}</span>
@@ -875,12 +875,12 @@ function renderVaga(v){
   const collapsible=!!v.motosOnly;
   const boxOpen=!collapsedBox[v.id];
 
-  const badge=occCount===slots.length?'<span class="vbadge full">Cheio</span>'
-    :occCount>0?'<span class="vbadge some">'+occCount+'/'+slots.length+'</span>'
-    :'<span class="vbadge empty">Livre</span>';
+  const badge=occCount===slots.length?'<span class="vbadge full" data-cy="vaga-status">Cheio</span>'
+    :occCount>0?'<span class="vbadge some" data-cy="vaga-status">'+occCount+'/'+slots.length+'</span>'
+    :'<span class="vbadge empty" data-cy="vaga-status">Livre</span>';
 
   const head=collapsible
-    ? `<button class="vh vhtoggle ${boxOpen?'open':''}" data-boxtoggle="${v.id}">
+    ? `<button class="vh vhtoggle ${boxOpen?'open':''}" data-boxtoggle="${v.id}" data-cy="vaga-motos-toggle">
          <div class="vnum mono">${v.id}</div>
          <div class="vinfo"><div class="t">Vaga ${v.id} <span class="motoTag">Só motos</span></div>
            <div class="s">${esc(v.local)}</div></div>${badge}<span class="chev">${ICON.arrow}</span></button>`
@@ -888,7 +888,7 @@ function renderVaga(v){
          <div class="vinfo"><div class="t">Vaga ${v.id}</div><div class="s">${esc(v.local)}</div></div>${badge}</div>`;
 
   // recolhida: mostra só o cabeçalho (ajuda quem só procura carro)
-  if(collapsible && !boxOpen) return `<div class="vaga ${iAmHere?'mine':''}" data-box="${v.id}">${head}</div>`;
+  if(collapsible && !boxOpen) return `<div class="vaga ${iAmHere?'mine':''}" data-cy="vaga" data-box="${v.id}">${head}</div>`;
 
   let body=collapsible?`<div class="motoNote">Esta vaga é exclusiva para motos.</div>`:'';
 
@@ -901,19 +901,19 @@ function renderVaga(v){
     // à direita: estacionar / avisar "pode estar ocupada" (vaga livre) OU "Sem carro?" (vaga de outra pessoa)
     let right='';
     if(!o){
-      const moreBtn=`<button class="slotMore ${oa.mine?'on':''}" data-occalert="${slotKey}" aria-label="Mais opções" title="${oa.mine?'Você avisou que pode estar ocupada':'Mais opções (avisar que pode estar ocupada)'}">${ICON.more}</button>`;
-      right=iAmParked?moreBtn:`<div class="slotBtns"><button class="miniBtn park" data-park="${slotKey}">Estacionar</button>${moreBtn}</div>`;
+      const moreBtn=`<button class="slotMore ${oa.mine?'on':''}" data-cy="vaga-mais-opcoes" data-occalert="${slotKey}" aria-label="Mais opções" title="${oa.mine?'Você avisou que pode estar ocupada':'Mais opções (avisar que pode estar ocupada)'}">${ICON.more}</button>`;
+      right=iAmParked?moreBtn:`<div class="slotBtns"><button class="miniBtn park" data-cy="estacionar" data-park="${slotKey}">Estacionar</button>${moreBtn}</div>`;
     }
-    else if(o&&!mine) right=`<button class="miniBtn rep ${di.mine?'on':''}" data-phantom="${slotKey}" title="${di.mine?'Você avisou que pode estar vazia':'A vaga aparece ocupada mas não tem carro? Toque para ver as opções'}">${di.mine?'Avisado':'Sem carro?'}</button>`;
+    else if(o&&!mine) right=`<button class="miniBtn rep ${di.mine?'on':''}" data-cy="sem-carro" data-phantom="${slotKey}" title="${di.mine?'Você avisou que pode estar vazia':'A vaga aparece ocupada mas não tem carro? Toque para ver as opções'}">${di.mine?'Avisado':'Sem carro?'}</button>`;
     // chip "pode estar vazia" ao lado do nome (quando alguém reportou)
-    const phantomTag=di.count?`<span class="phantomTag" title="${di.count} aviso${di.count>1?'s':''} de que pode estar vazia">${ICON.warn}pode estar vazia</span>`:'';
+    const phantomTag=di.count?`<span class="phantomTag" data-cy="aviso-pode-estar-vazia" title="${di.count} aviso${di.count>1?'s':''} de que pode estar vazia">${ICON.warn}pode estar vazia</span>`:'';
     // chip "pode estar ocupada" ao lado de "Livre" (carro sem cadastro)
-    const occAlertTag=oa.count?`<span class="occAlertTag" title="${oa.count} aviso${oa.count>1?'s':''} de que pode haver um carro sem cadastro">${ICON.warn}pode estar ocupada</span>`:'';
-    body+=`<div class="slot ${o?'taken':''}">
+    const occAlertTag=oa.count?`<span class="occAlertTag" data-cy="aviso-pode-estar-ocupada" title="${oa.count} aviso${oa.count>1?'s':''} de que pode haver um carro sem cadastro">${ICON.warn}pode estar ocupada</span>`:'';
+    body+=`<div class="slot ${o?'taken':''}" data-cy="slot" data-slot="${slotKey}">
       <div class="vic">${icon}</div>
       <div class="scol">
         <div class="slabel">${s.label}</div>
-        ${o?`<div class="sname">${esc(o.name)}${mine?'<span class="tagme">VOCÊ</span>':''}${phantomTag}</div><div class="ssala">Sala ${esc(o.sala)}</div>`
+        ${o?`<div class="sname" data-cy="slot-nome">${esc(o.name)}${mine?'<span class="tagme" data-cy="tag-voce">VOCÊ</span>':''}${phantomTag}</div><div class="ssala">Sala ${esc(o.sala)}</div>`
             :`<div class="sname livre">Livre${occAlertTag}</div>`}
       </div>${right}</div>`;
   });
@@ -925,18 +925,18 @@ function renderVaga(v){
       if(otherIdx>=0){
         const o=occInfo[otherIdx];
         const blocking=otherIdx===1;
-        inner+=`<button class="callBtn" data-callbtn data-name="${esc(o.name)}" data-phone="${esc(o.phone)}" data-sala="${esc(o.sala)}" data-box="${v.id}" data-local="${esc(v.local)}">
+        inner+=`<button class="callBtn" data-callbtn data-cy="chamar" data-name="${esc(o.name)}" data-phone="${esc(o.phone)}" data-sala="${esc(o.sala)}" data-box="${v.id}" data-local="${esc(v.local)}">
             <span class="cic">${ICON.bell}</span>
             <span class="ctxt"><span class="ct1">Chamar ${esc(firstName(o.name))} para descer</span>
             <span class="ct2">${blocking?'O carro dele(a) está na frente bloqueando você':'WhatsApp ou copiar o número'}</span></span>
             <span class="carr">${ICON.arrow}</span></button>`;
       }
     }
-    inner+=`<button class="libBtn" data-free="${v.id+'-'+mineIdx}">Liberar minha vaga</button>`;
+    inner+=`<button class="libBtn" data-cy="liberar" data-free="${v.id+'-'+mineIdx}">Liberar minha vaga</button>`;
     body+=`<div class="boxAct">${inner}</div>`;
   }
 
-  return `<div class="vaga ${iAmHere?'mine':''}" data-box="${v.id}">${head}${body}</div>`;
+  return `<div class="vaga ${iAmHere?'mine':''}" data-cy="vaga" data-box="${v.id}">${head}${body}</div>`;
 }
 
 /* ===== AÇÕES ===== */
@@ -965,7 +965,7 @@ function offerNotifyWaitlist(){
   const entries=Object.values(state.waitlist||{}).filter(w=>normPhone(w.phone)!==me).sort((a,b)=>(a.ts||0)-(b.ts||0));
   if(!entries.length)return; // ninguém esperando
   const sheet=$('#sheet');
-  const list=entries.map(w=>`<button class="opt wa" data-notify data-name="${esc(w.name)}" data-phone="${esc(w.phone)}" data-sala="${esc(w.sala)}">
+  const list=entries.map(w=>`<button class="opt wa" data-notify data-cy="avisar-espera" data-name="${esc(w.name)}" data-phone="${esc(w.phone)}" data-sala="${esc(w.sala)}">
       <span class="oic">${ICON.bell}</span>
       <span class="otxt"><span class="ot1">Avisar ${esc(w.name)}</span><span class="ot2">Sala ${esc(w.sala)} · está na lista de espera</span></span></button>`).join('');
   sheet.innerHTML=`<div class="ov" data-close></div>
@@ -974,7 +974,7 @@ function offerNotifyWaitlist(){
       <div class="sh-h">Vaga liberada!</div>
       <div class="sh-s">Quer avisar quem está na lista de espera?</div>
       ${list}
-      <button class="opt cancel" data-close>Agora não</button>
+      <button class="opt cancel" data-close data-cy="opcao-cancelar">Agora não</button>
     </div>`;
   sheet.classList.add('show');
   sheet.querySelectorAll('[data-close]').forEach(e=>e.addEventListener('click',closeSheet));
@@ -987,9 +987,9 @@ function openPhantomSheet(key){
   const di=disputeInfo(key);const vid=key.split('-')[0];
   const oicon=o.type==='moto'?ICON.moto:ICON.car;
   const warnOpt=di.mine
-    ? `<button class="opt" data-act="unwarn"><span class="oic">${ICON.warn}</span>
+    ? `<button class="opt" data-act="unwarn" data-cy="opcao-retirar-aviso"><span class="oic">${ICON.warn}</span>
         <span class="otxt"><span class="ot1">Retirar meu aviso</span><span class="ot2">Você havia marcado que pode estar vazia</span></span></button>`
-    : `<button class="opt" data-act="warn"><span class="oic">${ICON.warn}</span>
+    : `<button class="opt" data-act="warn" data-cy="opcao-avisar-vazia"><span class="oic">${ICON.warn}</span>
         <span class="otxt"><span class="ot1">Avisar que pode estar vazia</span><span class="ot2">Só mostra um aviso — não muda o nome</span></span></button>`;
   const sheet=$('#sheet');
   sheet.innerHTML=`<div class="ov" data-close></div>
@@ -998,9 +998,9 @@ function openPhantomSheet(key){
       <div class="sh-h">Vaga ${esc(vid)} · ${esc(o.name)}</div>
       <div class="sh-s">${di.count?('Há '+di.count+' aviso'+(di.count>1?'s':'')+' de que a vaga pode estar vazia'):'A vaga aparece ocupada'}. O que você quer fazer?</div>
       ${warnOpt}
-      <button class="opt" data-act="take"><span class="oic">${oicon}</span>
+      <button class="opt" data-act="take" data-cy="opcao-estacionar-aqui"><span class="oic">${oicon}</span>
         <span class="otxt"><span class="ot1">Estacionar aqui</span><span class="ot2">Assume a vaga no lugar de ${esc(firstName(o.name))}</span></span></button>
-      <button class="opt cancel" data-close>Cancelar</button>
+      <button class="opt cancel" data-close data-cy="opcao-cancelar">Cancelar</button>
     </div>`;
   sheet.classList.add('show');
   sheet.querySelectorAll('[data-close]').forEach(e=>e.addEventListener('click',closeSheet));
@@ -1058,9 +1058,9 @@ function openOccupiedSheet(key){
   const oa=occAlertInfo(key);const vid=key.split('-')[0];
   const [, idx]=key.split('-');const v=VAGAS.find(x=>x.id===vid);const slot=slotsOf(v)[+idx];
   const mainOpt=oa.mine
-    ? `<button class="opt" data-act="unalert"><span class="oic">${ICON.warn}</span>
+    ? `<button class="opt" data-act="unalert" data-cy="opcao-retirar-aviso"><span class="oic">${ICON.warn}</span>
         <span class="otxt"><span class="ot1">Retirar meu aviso</span><span class="ot2">Você havia marcado que pode estar ocupada</span></span></button>`
-    : `<button class="opt" data-act="alert"><span class="oic">${ICON.warn}</span>
+    : `<button class="opt" data-act="alert" data-cy="opcao-avisar-ocupada"><span class="oic">${ICON.warn}</span>
         <span class="otxt"><span class="ot1">Avisar que pode estar ocupada</span><span class="ot2">Tem um carro aqui que não aparece no sistema — só mostra um aviso</span></span></button>`;
   const sheet=$('#sheet');
   sheet.innerHTML=`<div class="ov" data-close></div>
@@ -1069,7 +1069,7 @@ function openOccupiedSheet(key){
       <div class="sh-h">Vaga ${esc(vid)} · ${esc(slot.label)}</div>
       <div class="sh-s">${oa.count?('Há '+oa.count+' aviso'+(oa.count>1?'s':'')+' de que pode haver um carro sem cadastro'):'A vaga aparece livre no sistema'}. O que você quer fazer?</div>
       ${mainOpt}
-      <button class="opt cancel" data-close>Cancelar</button>
+      <button class="opt cancel" data-close data-cy="opcao-cancelar">Cancelar</button>
     </div>`;
   sheet.classList.add('show');
   sheet.querySelectorAll('[data-close]').forEach(e=>e.addEventListener('click',closeSheet));
@@ -1111,16 +1111,16 @@ function renderWaitlist(){
   let items=entries.length
     ? entries.map(w=>{
         const mineW=normPhone(w.phone)===me;
-        const action=mineW?'<span class="wmine">você</span>'
-          :`<button class="wcall" data-waitcall data-name="${esc(w.name)}" data-phone="${esc(w.phone)}" data-sala="${esc(w.sala)}">${ICON.bell}<span>Avisar</span></button>`;
-        return `<div class="witem"><div class="winfo"><div class="wn">${esc(w.name)}</div><div class="ws">Sala ${esc(w.sala)}</div></div>${action}</div>`;
+        const action=mineW?'<span class="wmine" data-cy="espera-voce">você</span>'
+          :`<button class="wcall" data-waitcall data-cy="espera-avisar" data-name="${esc(w.name)}" data-phone="${esc(w.phone)}" data-sala="${esc(w.sala)}">${ICON.bell}<span>Avisar</span></button>`;
+        return `<div class="witem" data-cy="espera-item"><div class="winfo"><div class="wn">${esc(w.name)}</div><div class="ws">Sala ${esc(w.sala)}</div></div>${action}</div>`;
       }).join('')
     : `<div class="wempty">Ninguém esperando agora. Quando alguém liberar uma vaga, dá pra avisar quem está na lista.</div>`;
   let toggle = parked
     ? `<div class="whint">Você já está estacionado.</div>`
     : (iWait
-        ? `<button class="wbtn leave" id="waitToggle">Sair da lista de espera</button>`
-        : `<button class="wbtn join" id="waitToggle">Entrar na lista de espera</button>`);
+        ? `<button class="wbtn leave" id="waitToggle" data-cy="espera-sair">Sair da lista de espera</button>`
+        : `<button class="wbtn join" id="waitToggle" data-cy="espera-entrar">Entrar na lista de espera</button>`);
   el.innerHTML=items+toggle;
   const t=$('#waitToggle');if(t)t.addEventListener('click',iWait?leaveWaitlist:joinWaitlist);
   el.querySelectorAll('[data-waitcall]').forEach(b=>b.addEventListener('click',()=>openWaitSheet({name:b.dataset.name,phone:b.dataset.phone,sala:b.dataset.sala})));
@@ -1149,11 +1149,11 @@ function openWaitSheet(o){
       <div class="grip"></div>
       <div class="sh-h">Avisar ${esc(o.name)}</div>
       <div class="sh-s">Lista de espera · Sala ${esc(o.sala)}</div>
-      <button class="opt wa" id="optWa"><span class="oic">${ICON.wa}</span>
+      <button class="opt wa" id="optWa" data-cy="opcao-whatsapp"><span class="oic">${ICON.wa}</span>
         <span class="otxt"><span class="ot1">Avisar no WhatsApp</span><span class="ot2">Abre o WhatsApp com a mensagem pronta</span></span></button>
-      <button class="opt cp" id="optCopy"><span class="oic">${ICON.copy}</span>
+      <button class="opt cp" id="optCopy" data-cy="opcao-copiar"><span class="oic">${ICON.copy}</span>
         <span class="otxt"><span class="ot1">Copiar número de celular</span><span class="ot2">${fmtPhone(o.phone)}</span></span></button>
-      <button class="opt cancel" data-close>Cancelar</button>
+      <button class="opt cancel" data-close data-cy="opcao-cancelar">Cancelar</button>
     </div>`;
   sheet.classList.add('show');
   sheet.querySelectorAll('[data-close]').forEach(e=>e.addEventListener('click',closeSheet));
@@ -1167,7 +1167,7 @@ function openSuggestions(){
   startLive();
   sugCache=null;
   app.innerHTML=`<header class="bar"><div class="barTop">
-      <button class="iconbtn" id="sugBack" title="Voltar">${ICON.back}</button>
+      <button class="iconbtn" id="sugBack" data-cy="voltar" title="Voltar">${ICON.back}</button>
       <div class="who"><div class="nm">Sugestões e melhorias</div><div class="meta">Sua ideia ajuda a melhorar o app</div></div>
       ${themeBtnHTML()}</div></header>
     <main>
@@ -1175,12 +1175,12 @@ function openSuggestions(){
         <h2>Enviar sugestão</h2>
         <p class="lead">Conte uma ideia ou um problema que você encontrou.</p>
         <div class="field"><label for="sugText">Sua mensagem</label>
-          <textarea id="sugText" maxlength="1000" placeholder="Ex.: seria bom receber um aviso quando uma vaga libera…"></textarea></div>
-        <div class="sugYou">Enviando como <b>${esc(user.name)}</b> · Sala ${esc(user.sala)} · ${fmtPhone(user.phone)}</div>
-        <button class="btn" id="sugSend">Enviar sugestão</button>
+          <textarea id="sugText" data-cy="sugestao-texto" maxlength="1000" placeholder="Ex.: seria bom receber um aviso quando uma vaga libera…"></textarea></div>
+        <div class="sugYou" data-cy="sugestao-autor">Enviando como <b>${esc(user.name)}</b> · Sala ${esc(user.sala)} · ${fmtPhone(user.phone)}</div>
+        <button class="btn" id="sugSend" data-cy="sugestao-enviar">Enviar sugestão</button>
       </div>
       <h3 class="sugListH">Enviadas</h3>
-      <div id="sugList" class="sugList"><div class="wempty">Carregando…</div></div>
+      <div id="sugList" class="sugList" data-cy="sugestoes-lista"><div class="wempty">Carregando…</div></div>
     </main>`;
   bindThemeBtns();
   $('#sugBack').addEventListener('click',openDashboard);
@@ -1198,14 +1198,14 @@ function voteCounts(s){const v=s.votes||{};let up=0,down=0;for(const k in v){if(
 function sugItemHtml(s){
   const c=voteCounts(s);const id=esc(sid(s));const impl=s.implemented===true;
   const by=impl&&s.implementedBy?(' · por '+esc(firstName(s.implementedBy))):'';
-  return `<div class="sugItem ${impl?'done':''}">
+  return `<div class="sugItem ${impl?'done':''}" data-cy="sugestao">
     <div class="sugMeta"><b>${esc(s.name)}</b> · Sala ${esc(s.sala)} · ${fmtDateTime(s.ts)}</div>
     <div class="sugBody">${esc(s.text)}</div>
-    ${impl?`<div class="sugDone">${ICON.check}<span>Implementada${by}</span></div>`:''}
+    ${impl?`<div class="sugDone" data-cy="sugestao-implementada">${ICON.check}<span>Implementada${by}</span></div>`:''}
     <div class="sugVotes">
-      <button class="voteBtn up ${c.mine===1?'on':''}" data-vote="1" data-sid="${id}">${ICON.thumbUp}<span>${c.up}</span></button>
-      <button class="voteBtn down ${c.mine===-1?'on':''}" data-vote="-1" data-sid="${id}">${ICON.thumbDown}<span>${c.down}</span></button>
-      <button class="implBtn ${impl?'on':''}" data-impl="${id}" title="${impl?'Marcada como implementada — toque para desfazer':'Marcar esta sugestão como já implementada'}">${ICON.check}<span>${impl?'Implementada':'Marcar implementada'}</span></button>
+      <button class="voteBtn up ${c.mine===1?'on':''}" data-cy="voto-positivo" data-vote="1" data-sid="${id}">${ICON.thumbUp}<span>${c.up}</span></button>
+      <button class="voteBtn down ${c.mine===-1?'on':''}" data-cy="voto-negativo" data-vote="-1" data-sid="${id}">${ICON.thumbDown}<span>${c.down}</span></button>
+      <button class="implBtn ${impl?'on':''}" data-cy="marcar-implementada" data-impl="${id}" title="${impl?'Marcada como implementada — toque para desfazer':'Marcar esta sugestão como já implementada'}">${ICON.check}<span>${impl?'Implementada':'Marcar implementada'}</span></button>
     </div></div>`;
 }
 function renderSugList(){
@@ -1272,16 +1272,16 @@ let rankPeriod='month', rankShowAll=false;
 const RANK_TOP=10; // quantos aparecem antes do "Ver todos"
 function openRanking(){
   app.innerHTML=`<header class="bar"><div class="barTop">
-      <button class="iconbtn" id="rankBack" title="Voltar">${ICON.back}</button>
+      <button class="iconbtn" id="rankBack" data-cy="voltar" title="Voltar">${ICON.back}</button>
       <div class="who"><div class="nm">Ranking</div><div class="meta">Quem mais usa as vagas</div></div>
       ${themeBtnHTML()}</div></header>
     <main>
       <div class="rankSeg">
-        <button data-rperiod="month" class="${rankPeriod==='month'?'on':''}">Este mês</button>
-        <button data-rperiod="all" class="${rankPeriod==='all'?'on':''}">Geral</button>
+        <button data-rperiod="month" data-cy="ranking-mes" class="${rankPeriod==='month'?'on':''}">Este mês</button>
+        <button data-rperiod="all" data-cy="ranking-geral" class="${rankPeriod==='all'?'on':''}">Geral</button>
       </div>
       <p class="rankNote">Conta os <b>dias</b> em que cada pessoa estacionou (sair e voltar no mesmo dia conta 1). A favorita é a vaga onde ela mais parou.</p>
-      <div id="rankList"><div class="wempty">Carregando…</div></div>
+      <div id="rankList" data-cy="ranking-lista"><div class="wempty">Carregando…</div></div>
     </main>`;
   bindThemeBtns();
   $('#rankBack').addEventListener('click',openDashboard);
@@ -1314,16 +1314,16 @@ function renderRankTable(items){
   const shown=rankShowAll?items:items.slice(0,RANK_TOP);
   let h='';
   // sua posição sempre à vista, mesmo fora do top
-  if(me) h+=`<div class="rkMe"><div class="pos">${me.pos}º</div>
+  if(me) h+=`<div class="rkMe" data-cy="ranking-minha-posicao"><div class="pos">${me.pos}º</div>
       <div class="tx"><div class="t1">Sua posição</div><div class="t2">Favorita: <b>Vaga ${esc(me.fav)}</b> (${me.favDays} ${dias(me.favDays)})</div></div>
       <div class="d"><div class="n">${me.days}</div><div class="l">${dias(me.days)}</div></div></div>`;
   h+=`<div class="rkTable"><div class="rkHead"><span>#</span><span>Nome</span><span>Favorita</span><span class="r">Dias</span></div>`+
-    shown.map(it=>`<div class="rkRow ${it.me?'me':''}">
+    shown.map(it=>`<div class="rkRow ${it.me?'me':''}" data-cy="ranking-linha">
       <div class="p">${it.pos<=3?`<i class="p${it.pos}">${it.pos}º</i>`:it.pos+'º'}</div>
       <div class="nm"><div class="n1">${esc(it.name)}</div><div class="n2">Sala ${esc(it.sala)}</div></div>
       <div class="fv">Vaga ${esc(it.fav)}</div>
       <div class="dd r">${it.days}</div></div>`).join('')+`</div>`;
-  if(items.length>RANK_TOP) h+=`<button class="rkMore" id="rkMore">${rankShowAll?'Mostrar só o top '+RANK_TOP:'Ver todos ('+items.length+')'}</button>`;
+  if(items.length>RANK_TOP) h+=`<button class="rkMore" id="rkMore" data-cy="ranking-ver-todos">${rankShowAll?'Mostrar só o top '+RANK_TOP:'Ver todos ('+items.length+')'}</button>`;
   el.innerHTML=h;
   const b=$('#rkMore');if(b)b.addEventListener('click',()=>{rankShowAll=!rankShowAll;renderRankTable(items);});
 }
@@ -1348,7 +1348,7 @@ function showUpdates(){
       <h2>O que mudou no app</h2>
       <div class="msub">Algumas melhorias que chegaram agora:</div>
       <ul>${UPDATES.map(t=>`<li><span class="mi">${ICON.check}</span><span>${t}</span></li>`).join('')}</ul>
-      <button class="btn" id="updOk">Entendi</button>
+      <button class="btn" id="updOk" data-cy="novidades-ok">Entendi</button>
     </div>`;
   m.classList.add('show');
   m.querySelector('[data-close]').addEventListener('click',closeUpdates);
