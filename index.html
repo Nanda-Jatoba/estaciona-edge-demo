@@ -339,7 +339,7 @@
   var now = Date.now(), H = 3600e3;
   function d() { var t = new Date(); return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0'); }
 
-  var ME = { name: 'Camila Ribeiro', sala: '1408', phone: '82900000001' };
+  var ME = { name: 'Maria Fernanda', sala: '1408', phone: '82900000001' };
   var U = {
     rafael:  { name: 'Rafael Lima',     sala: '1204', phone: '82900000002' },
     bruno:   { name: 'Bruno Carvalho',  sala: '903',  phone: '82900000003' },
@@ -359,7 +359,6 @@
   var state = {
     date: d(),
     occupancy: {
-      '210-0': occ(ME, 2.5),            // Garagem 1 · Fundo  -> você (bloqueada)
       '210-1': occ(U.rafael, 1.5),      // Garagem 1 · Frente -> está na frente
       '211-0': occ(U.bruno, 4),         // Garagem 1 · Fundo  (com aviso "pode estar vazia")
       '209-0': occ(U.juliana, 3),
@@ -377,6 +376,9 @@
   };
   state.waitlist[U.beatriz.phone] = { name: U.beatriz.name, sala: U.beatriz.sala, phone: U.beatriz.phone, ts: now - 0.8 * H };
   state.waitlist[U.gabriel.phone] = { name: U.gabriel.name, sala: U.gabriel.sala, phone: U.gabriel.phone, ts: now - 0.4 * H };
+  // Quem abre a demo começa sem vaga e escolhe onde estacionar. Só nos prints (?view=...)
+  // a pessoa de demonstração já aparece no fundo da 210, bloqueada pelo Rafael na frente.
+  if (qs.get('view')) state.occupancy['210-0'] = occ(ME, 2.5);
   if (qs.get('view') === 'chamado')
     state.calls[ME.phone] = { from: U.rafael.name, sala: U.rafael.sala, box: '210', local: 'Garagem 1', ts: now - 0.1 * H };
 
